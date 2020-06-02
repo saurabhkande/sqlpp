@@ -1,3 +1,4 @@
+drop table emp;
 CREATE TABLE emp (
 empno INT PRIMARY KEY,
 ename VARCHAR(10),
