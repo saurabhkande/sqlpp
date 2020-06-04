@@ -1,6 +1,5 @@
 USE TestDB -- you don't need the square brackets, but they don't hurt
 
-DROP TABLE Persons;
 
 CREATE TABLE Persons (
     PersonID int,
