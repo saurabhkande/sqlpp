@@ -1,6 +1,5 @@
-USE TestDB -- you don't need the square brackets, but they don't hurt
-
-
+USE financeDB 
+    
 CREATE TABLE Persons (
     PersonID int,
     LastName varchar(255),
@@ -8,7 +7,6 @@ CREATE TABLE Persons (
     Address varchar(255),
     City varchar(255)
 );
-
 
 INSERT INTO Persons
     (
