@@ -12,11 +12,34 @@ steps:
   displayName: 'Run a one-line script'
 
 
-- task: SqlDacpacDeploymentOnMachineGroup@0
-  displayName: 'Deploy using : dacpac'
+steps:
+- task: AzureMysqlDeployment@1
   inputs:
-    DacpacFile: '$(System.DefaultWorkingDirectory)/_sqlpp.git/test.sql'
-    DatabaseName: 20.189.77.254
-    AuthScheme: sqlServerAuthentication
-    SqlUsername: ssk
-    SqlPassword: 'ssk@123'
+    azureSubscription: 'azure-ser-connection'
+    ServerName: 'poc-sql-server.mysql.database.azure.com'
+    SqlUsername: 'ssk'
+    SqlPassword: '$(SQLpass)'
+    TaskNameSelector: 'InlineSqlTask'
+    SqlInline: |
+      DROP DATABASE IF EXISTS quickstartdb;
+      CREATE DATABASE quickstartdb;
+      USE quickstartdb;
+      
+      -- Create a table and insert rows
+      DROP TABLE IF EXISTS inventory;
+      CREATE TABLE inventory (id serial PRIMARY KEY, name VARCHAR(50), quantity INTEGER);
+      INSERT INTO inventory (name, quantity) VALUES ('banana', 150);
+      INSERT INTO inventory (name, quantity) VALUES ('orange', 154);
+      INSERT INTO inventory (name, quantity) VALUES ('apple', 100);
+      
+      -- Read
+      SELECT * FROM inventory;
+      
+      -- Update
+      UPDATE inventory SET quantity = 200 WHERE id = 1;
+      SELECT * FROM inventory;
+      
+      -- Delete
+      DELETE FROM inventory WHERE id = 2;
+      SELECT * FROM inventory;
+    IpDetectionMethod: 'AutoDetect'
