@@ -1,0 +1,22 @@
+trigger:
+  branches:
+    include:
+    - master
+
+pool:
+  name: Default
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+
+- task: SqlDacpacDeploymentOnMachineGroup@0
+  displayName: 'Deploy using : dacpac'
+  inputs:
+    DacpacFile: '$(System.DefaultWorkingDirectory)/_sqlpp.git/test.sql'
+    DatabaseName: 20.189.77.254
+    AuthScheme: sqlServerAuthentication
+    SqlUsername: ssk
+    SqlPassword: 'ssk@123'
